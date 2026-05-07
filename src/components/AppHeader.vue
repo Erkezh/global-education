@@ -42,7 +42,7 @@ const selectLanguage = (lang) => {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center relative">
       <!-- Logo -->
       <a href="/" class="flex items-center">
-        <img src="@/assets/logo/logo.png" alt="Logo" class="h-10 w-auto" />
+        <img src="@/assets/logo/logo-g.svg" alt="Logo" class="h-10 w-auto" />
       </a>
       
       <!-- Navigation Menu -->
