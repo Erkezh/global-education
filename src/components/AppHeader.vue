@@ -16,8 +16,8 @@ const selectLanguage = (lang) => {
 </script>
 
 <template>
-  <header class="fixed top-0 left-0 right-0 z-[999]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center relative">
+  <header class="fixed top-0 left-0 right-0 z-[999] pointer-events-none">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center relative pointer-events-auto">
       <!-- Logo -->
       <a href="/" class="flex items-center">
         <img src="@/assets/logo/logo-g-green.svg" alt="Logo" class="h-10 w-auto" />

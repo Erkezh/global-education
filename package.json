@@ -13,6 +13,7 @@
   "dependencies": {
     "gsap": "^3.15.0",
     "lucide-vue-next": "^0.368.0",
+    "mathjs": "^14.9.1",
     "ogl": "^1.0.11",
     "pinia": "^3.0.4",
     "three": "^0.161.0",
