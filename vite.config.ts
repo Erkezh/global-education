@@ -14,9 +14,12 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      'three': fileURLToPath(new URL('./node_modules/three', import.meta.url)),
+      'three-stdlib': fileURLToPath(new URL('./node_modules/three-stdlib', import.meta.url))
     },
   },
+  // Forced restart to resolve transient dependencies 
   server: {
     proxy: {
       '/api': {

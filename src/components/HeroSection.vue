@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full min-h-[600px] flex items-center pt-32 pb-16 overflow-hidden">
+  <section class="relative w-full min-h-[600px] flex items-center pt-4 pb-32 overflow-hidden">
     <!-- Aurora Background (made semi-transparent to blend with white) -->
     <div class="absolute inset-0 z-0 opacity-80">
       <Aurora
@@ -56,13 +56,9 @@
           </p>
         </div>
         
-        <!-- Right Side: Image -->
-        <div class="relative flex justify-center lg:justify-end">
-          <img 
-            src="@/assets/images/hero section.png" 
-            alt="Students with app" 
-            class="w-full max-w-[500px] h-auto object-contain drop-shadow-2xl animate-fade-in-up" 
-          />
+        <!-- Right Side: 3D Model -->
+        <div class="relative flex justify-center lg:justify-end w-full h-[500px] lg:h-[700px] animate-fade-in-up">
+          <PhoneModel />
         </div>
       </div>
     </div>
@@ -73,6 +69,7 @@
 import { ref, onMounted, watch } from 'vue';
 import Aurora from "./Aurora.vue";
 import TextType from "@/component/TextType/TextType.vue";
+import PhoneModel from "./PhoneModel.vue";
 import { useLanguageStore } from '@/stores/language';
 import { storeToRefs } from 'pinia';
 
