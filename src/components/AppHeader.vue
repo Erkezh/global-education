@@ -1,38 +1,16 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+import { useLanguageStore } from '@/stores/language'
+import { storeToRefs } from 'pinia'
+
+const langStore = useLanguageStore()
+const { currentLang, t } = storeToRefs(langStore)
+const languages = langStore.languages
 
 const isLangMenuOpen = ref(false)
-const currentLang = ref('English')
-const languages = ['English', 'Русский', 'Қазақша']
-
-const translations = {
-  'English': {
-    about: 'About',
-    features: 'Features',
-    process: 'Process',
-    app: 'App',
-    contact: 'Contact'
-  },
-  'Русский': {
-    about: 'О нас',
-    features: 'Преимущества',
-    process: 'Процесс',
-    app: 'Приложение',
-    contact: 'Контакты'
-  },
-  'Қазақша': {
-    about: 'Біз туралы',
-    features: 'Ерекшеліктер',
-    process: 'Процесс',
-    app: 'Қосымша',
-    contact: 'Байланыс'
-  }
-}
-
-const t = computed(() => translations[currentLang.value])
 
 const selectLanguage = (lang) => {
-  currentLang.value = lang
+  langStore.setLanguage(lang)
   isLangMenuOpen.value = false
 }
 </script>
@@ -47,11 +25,11 @@ const selectLanguage = (lang) => {
       
       <!-- Navigation Menu -->
       <nav class="hidden lg:flex space-x-8 items-center rounded-full border border-gray-200 shadow-[0px_2px_8px_0px_rgba(16,24,40,0.04)] px-[24px] h-[52px] bg-white absolute left-1/2 -translate-x-1/2">
-        <a href="#about" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.about }}</a>
-        <a href="#advantages" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.features }}</a>
-        <a href="#how-it-works" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.process }}</a>
-        <a href="#app" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.app }}</a>
-        <a href="#contacts" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.contact }}</a>
+        <a href="#about" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.nav.about }}</a>
+        <a href="#advantages" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.nav.features }}</a>
+        <a href="#how-it-works" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.nav.process }}</a>
+        <a href="#app" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.nav.app }}</a>
+        <a href="#contacts" class="text-black hover:text-[#008A1B] font-semibold transition">{{ t.nav.contact }}</a>
       </nav>
 
       <!-- Right Side Actions -->
@@ -72,7 +50,7 @@ const selectLanguage = (lang) => {
           <!-- Dropdown Menu -->
           <div 
             v-if="isLangMenuOpen" 
-            class="absolute right-0 mt-2 w-24 bg-white rounded-md shadow-lg border border-gray-100 overflow-hidden z-50"
+            class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg border border-gray-100 overflow-hidden z-50"
           >
             <div class="py-1">
               <button 

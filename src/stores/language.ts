@@ -31,8 +31,8 @@ export const useLanguageStore = defineStore('language', () => {
       },
       hero: {
         badge: "Лучшая подготовка к экзаменам в Казахстане",
-        title1: "Глобальное",
-        title2: "Образование",
+        title1: "Global",
+        title2: "Education",
         description: "Готовьтесь к экзаменам в НИШ, РФМШ и БИЛ с интенсивным обучением — сочетающим экспертные офлайн-занятия с мощным мобильным приложением."
       }
     },
@@ -46,8 +46,8 @@ export const useLanguageStore = defineStore('language', () => {
       },
       hero: {
         badge: "Қазақстандағы ең үздік емтиханға дайындық",
-        title1: "Жаһандық",
-        title2: "Білім беру",
+        title1: "Global",
+        title2: "Education",
         description: "НИШ, РФМШ және БИЛ емтихандарына қарқынды дайындық — сарапшылық офлайн-сабақтарды қуатты мобильді қосымшамен біріктіре отырып."
       }
     }

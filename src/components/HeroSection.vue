@@ -20,13 +20,13 @@
           <!-- Badge -->
           <div class="inline-flex items-center space-x-2 bg-white rounded-full px-5 py-2.5 shadow-[0px_2px_8px_0px_rgba(16,24,40,0.04)]">
             <span class="w-2.5 h-2.5 rounded-full bg-[#008A1B]"></span>
-            <span class="text-[#008A1B] font-normal text-sm sm:text-base">Kazakhstan's Top Exam Prep</span>
+            <span class="text-[#008A1B] font-normal text-sm sm:text-base">{{ t.hero.badge }}</span>
           </div>
           
           <!-- Main Title -->
           <h1 class="text-6xl sm:text-7xl md:text-[80px] font-semibold leading-[1.1] text-black flex flex-col h-[2.2em]">
             <TextType 
-              text="Global" 
+              :text="t.hero.title1" 
               :typingSpeed="100" 
               :showCursor="showFirstCursor" 
               cursorCharacter="|"
@@ -34,9 +34,10 @@
               :loop="false"
               as="div"
               className="h-[1.1em] flex items-center"
+              :key="t.hero.title1"
             />
             <TextType 
-              text="Education" 
+              :text="t.hero.title2" 
               :typingSpeed="100" 
               :initialDelay="800"
               :showCursor="showSecondCursor" 
@@ -45,12 +46,13 @@
               :loop="false"
               as="div"
               className="h-[1.1em] flex items-center text-[#008A1B]"
+              :key="t.hero.title2"
             />
           </h1>
           
           <!-- Description -->
           <p class="text-black font-semibold text-lg sm:text-xl max-w-lg leading-relaxed mt-4">
-            Prepare for NIS, RFMSH and BIL exams with intensive training — combining expert offline instruction with a powerful mobile learning app.
+            {{ t.hero.description }}
           </p>
         </div>
         
@@ -68,18 +70,33 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import Aurora from "./Aurora.vue";
 import TextType from "@/component/TextType/TextType.vue";
+import { useLanguageStore } from '@/stores/language';
+import { storeToRefs } from 'pinia';
+
+const langStore = useLanguageStore();
+const { t, currentLang } = storeToRefs(langStore);
 
 const showFirstCursor = ref(true);
 const showSecondCursor = ref(false);
 
-onMounted(() => {
+const startAnimation = () => {
+  showFirstCursor.value = true;
+  showSecondCursor.value = false;
   setTimeout(() => {
     showFirstCursor.value = false;
     showSecondCursor.value = true;
   }, 800);
+};
+
+onMounted(() => {
+  startAnimation();
+});
+
+watch(currentLang, () => {
+  startAnimation();
 });
 </script>
 
