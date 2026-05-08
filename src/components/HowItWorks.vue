@@ -1,40 +1,44 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, computed } from 'vue';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useLanguageStore } from '@/stores/language';
+import { storeToRefs } from 'pinia';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const steps = [
+const langStore = useLanguageStore();
+const { t } = storeToRefs(langStore);
+
+const stepMeta = [
   {
     id: '01',
-    title: 'Join the Program',
-    description: 'Start your journey with structured offline classes guided by experienced teachers.',
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>`,
     colorClass: 'bg-[#EFF6FF] text-[#2563EB]'
   },
   {
     id: '02',
-    title: 'Learn and Practice',
-    description: 'Build strong knowledge through intensive lessons and regular practice.',
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`,
     colorClass: 'bg-[#FFF7ED] text-[#F97316]'
   },
   {
     id: '03',
-    title: 'Take Tests in the App',
-    description: 'Complete tests easily in the mobile app and check your understanding.',
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 10h8l-8 4h8"/></svg>`,
     colorClass: 'bg-[#FAF5FF] text-[#A855F7]'
   },
   {
     id: '04',
-    title: 'Track Progress and Improve',
-    description: 'Monitor your results, earn points, and improve your performance over time.',
     icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`,
     colorClass: 'bg-[#FFF7ED] text-[#F97316]'
   }
 ]
+
+const steps = computed(() =>
+  t.value.howItWorks.steps.map((step, i) => ({
+    ...step,
+    ...stepMeta[i]
+  }))
+)
 
 const stepElements = ref([]);
 
@@ -46,20 +50,17 @@ onMounted(() => {
     
     gsap.fromTo(
       el,
-      {
-        opacity: 0,
-        x: isLeft ? -100 : 100
-      },
+      { opacity: 0, x: isLeft ? -100 : 100 },
       {
         opacity: 1,
         x: 0,
         duration: 0.8,
-        delay: index * 0.1, // Slight stagger if multiple visible at once
+        delay: index * 0.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 85%", 
-          toggleActions: "play none none reverse" // plays on enter, reverses on leave backwards
+          start: "top 85%",
+          toggleActions: "play none none reverse"
         }
       }
     );
@@ -81,11 +82,11 @@ onUnmounted(() => {
           <svg class="w-4 h-4 text-[#008A1B]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/>
           </svg>
-          <span class="text-sm font-semibold text-[#008A1B]">How it works</span>
+          <span class="text-sm font-semibold text-[#008A1B]">{{ t.howItWorks.badge }}</span>
         </div>
         
-        <h2 class="text-[40px] font-bold text-[#111827] mb-4 tracking-tight leading-tight">Simple steps to better results</h2>
-        <p class="text-lg text-[#6B7280]">Attend offline classes, take tests in the app, and continuously improve your performance.</p>
+        <h2 class="text-[40px] font-bold text-[#111827] mb-4 tracking-tight leading-tight">{{ t.howItWorks.title }}</h2>
+        <p class="text-lg text-[#6B7280]">{{ t.howItWorks.subtitle }}</p>
       </div>
 
       <!-- Steps Column -->
@@ -97,7 +98,7 @@ onUnmounted(() => {
           class="flex items-center w-full opacity-0"
           :class="index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'"
         >
-          <!-- Number (10%) -->
+          <!-- Number (15%) -->
           <div 
             class="hidden md:flex w-[15%] shrink-0 items-center"
             :class="index % 2 === 0 ? 'justify-start' : 'justify-end'"

@@ -1,31 +1,21 @@
 <script setup>
+import { computed } from 'vue'
+import { useLanguageStore } from '@/stores/language'
+import { storeToRefs } from 'pinia'
 import IntensiveLearningIcon from '@/assets/svg/intensive-learning.svg'
 import MobileTestingIcon from '@/assets/svg/mobile-testing.svg'
 import TrackProgressIcon from '@/assets/svg/track-progress.svg'
 import StudentRankingIcon from '@/assets/svg/student-ranking.svg'
 
-const features = [
-  {
-    title: 'Intensive Learning',
-    description: 'Expert instructors and structured programs to help you master every subject',
-    icon: IntensiveLearningIcon
-  },
-  {
-    title: 'Mobile Testing',
-    description: 'Practice anytime, anywhere with our powerful and easy to use app',
-    icon: MobileTestingIcon
-  },
-  {
-    title: 'Track Progress',
-    description: 'Monitor your results, strengths and weaknesses to improve faster',
-    icon: TrackProgressIcon
-  },
-  {
-    title: 'Student Ranking',
-    description: 'Compete with other students and see your ranking on the leaderboard',
-    icon: StudentRankingIcon
-  }
-]
+const langStore = useLanguageStore()
+const { t } = storeToRefs(langStore)
+
+const icons = [IntensiveLearningIcon, MobileTestingIcon, TrackProgressIcon, StudentRankingIcon]
+
+const features = computed(() => t.value.features.items.map((item, i) => ({
+  ...item,
+  icon: icons[i]
+})))
 </script>
 
 <template>
@@ -41,11 +31,11 @@ const features = [
             <rect x="14" y="14" width="7" height="7" rx="1"></rect>
             <rect x="3" y="14" width="7" height="7" rx="1"></rect>
           </svg>
-          <span class="text-sm font-semibold text-[#008A1B]">Features</span>
+          <span class="text-sm font-semibold text-[#008A1B]">{{ t.features.badge }}</span>
         </div>
         
-        <h2 class="text-[40px] font-bold text-[#111827] mb-4 tracking-tight leading-tight">Everything you need to succeed</h2>
-        <p class="text-lg text-[#6B7280]">Powerful tools and structured learning to help you achieve top results.</p>
+        <h2 class="text-[40px] font-bold text-[#111827] mb-4 tracking-tight leading-tight">{{ t.features.title }}</h2>
+        <p class="text-lg text-[#6B7280]">{{ t.features.subtitle }}</p>
       </div>
 
       <!-- Features Grid -->
