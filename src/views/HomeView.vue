@@ -11,7 +11,7 @@ import GradualBlur from '@/component/GradualBlur/GradualBlur.vue'
     <GradualBlur
       target="page"
       position="top"
-      height="8rem"
+      height="6rem"
       :strength="2.5"
       :zIndex="800"
       :divCount="5"
