@@ -1,33 +1,128 @@
 <script setup>
+import { onMounted, onUnmounted, ref } from 'vue';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
 const steps = [
-  { id: '01', name: 'Submit Application', description: 'Fill out our simple online form to express your interest.' },
-  { id: '02', name: 'Consultation', description: 'We will contact you to discuss goals and schedule an initial assessment.' },
-  { id: '03', name: 'Attend Classes', description: 'Start attending our interactive and comprehensive offline classes.' },
-  { id: '04', name: 'App Testing', description: 'Regularly take tests in our mobile app to track learning.' },
-  { id: '05', name: 'Achieve Goals', description: 'See continuous improvement and ace the final entrance exams.' },
+  {
+    id: '01',
+    title: 'Join the Program',
+    description: 'Start your journey with structured offline classes guided by experienced teachers.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>`,
+    colorClass: 'bg-[#EFF6FF] text-[#2563EB]'
+  },
+  {
+    id: '02',
+    title: 'Learn and Practice',
+    description: 'Build strong knowledge through intensive lessons and regular practice.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`,
+    colorClass: 'bg-[#FFF7ED] text-[#F97316]'
+  },
+  {
+    id: '03',
+    title: 'Take Tests in the App',
+    description: 'Complete tests easily in the mobile app and check your understanding.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M8 10h8l-8 4h8"/></svg>`,
+    colorClass: 'bg-[#FAF5FF] text-[#A855F7]'
+  },
+  {
+    id: '04',
+    title: 'Track Progress and Improve',
+    description: 'Monitor your results, earn points, and improve your performance over time.',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`,
+    colorClass: 'bg-[#FFF7ED] text-[#F97316]'
+  }
 ]
+
+const stepElements = ref([]);
+
+onMounted(() => {
+  stepElements.value.forEach((el, index) => {
+    if (!el) return;
+    
+    const isLeft = index % 2 === 0;
+    
+    gsap.fromTo(
+      el,
+      {
+        opacity: 0,
+        x: isLeft ? -100 : 100
+      },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        delay: index * 0.1, // Slight stagger if multiple visible at once
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%", 
+          toggleActions: "play none none reverse" // plays on enter, reverses on leave backwards
+        }
+      }
+    );
+  });
+});
+
+onUnmounted(() => {
+  ScrollTrigger.getAll().forEach(t => t.kill());
+});
 </script>
 
 <template>
-  <section class="py-24 bg-white">
+  <section class="py-24 bg-white" id="how-it-works">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">How It Works</h2>
-        <p class="mt-4 text-xl text-gray-500">Your journey to success in five simple steps.</p>
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-gray-100 shadow-[0px_2px_8px_0px_rgba(16,24,40,0.04)] bg-white mb-6">
+          <svg class="w-4 h-4 text-[#008A1B]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/>
+          </svg>
+          <span class="text-sm font-semibold text-[#008A1B]">How it works</span>
+        </div>
+        
+        <h2 class="text-[40px] font-bold text-[#111827] mb-4 tracking-tight leading-tight">Simple steps to better results</h2>
+        <p class="text-lg text-[#6B7280]">Attend offline classes, take tests in the app, and continuously improve your performance.</p>
       </div>
 
-      <div class="relative">
-        <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gray-100" aria-hidden="true"></div>
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
-          <div v-for="step in steps" :key="step.id" class="relative text-center">
-            <div class="w-24 h-24 mx-auto bg-white border-4 border-primary-50 rounded-full flex items-center justify-center relative z-10 shadow-sm">
-              <span class="text-2xl font-bold text-primary-600">{{ step.id }}</span>
+      <!-- Steps Column -->
+      <div class="max-w-[1000px] mx-auto flex flex-col gap-6 px-4 md:px-8 overflow-hidden py-4">
+        <div 
+          v-for="(step, index) in steps" 
+          :key="step.id"
+          :ref="el => { if (el) stepElements[index] = el }"
+          class="flex items-center w-full opacity-0"
+          :class="index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'"
+        >
+          <!-- Number (10%) -->
+          <div 
+            class="hidden md:flex w-[15%] shrink-0 items-center"
+            :class="index % 2 === 0 ? 'justify-start' : 'justify-end'"
+          >
+            <span class="text-[120px] font-bold text-gray-200 leading-none select-none tracking-tighter">{{ step.id }}</span>
+          </div>
+          
+          <!-- Card (85%) -->
+          <div 
+            :class="[
+              'w-full md:w-[85%] bg-white rounded-[16px] border border-gray-100 shadow-[0_4px_20px_0_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_0_rgba(0,0,0,0.06)] transition-all duration-300 px-8 py-8 flex flex-col md:flex-row items-start md:items-center gap-6 z-10',
+              index % 2 === 0 ? 'hover:translate-x-3 hover:-translate-y-1' : 'hover:-translate-x-3 hover:-translate-y-1'
+            ]"
+          >
+            <div :class="['w-16 h-16 rounded-full flex items-center justify-center shrink-0', step.colorClass]">
+              <div v-html="step.icon"></div>
             </div>
-            <h3 class="mt-6 text-lg font-bold text-gray-900">{{ step.name }}</h3>
-            <p class="mt-2 text-sm text-gray-500">{{ step.description }}</p>
+            <div>
+              <h3 class="text-[20px] font-bold text-gray-900 mb-1">{{ step.title }}</h3>
+              <p class="text-gray-500 text-[16px] leading-relaxed">{{ step.description }}</p>
+            </div>
           </div>
         </div>
       </div>
+      
     </div>
   </section>
 </template>

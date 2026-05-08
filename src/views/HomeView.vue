@@ -2,6 +2,7 @@
 import AppHeader from '@/components/AppHeader.vue'
 import HeroSection from '@/components/HeroSection.vue'
 import AdvantagesSection from '@/components/AdvantagesSection.vue'
+import HowItWorks from '@/components/HowItWorks.vue'
 import GradualBlur from '@/component/GradualBlur/GradualBlur.vue'
 </script>
 
@@ -22,6 +23,7 @@ import GradualBlur from '@/component/GradualBlur/GradualBlur.vue'
     <AppHeader />
     <HeroSection />
     <AdvantagesSection />
+    <HowItWorks />
 
   </main>
 </template>
